@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Loja Tech</title>
+</head><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<body>
+ 
+    <h1>Produtos</h1>
+
+    <a href="{{ url_for('cadastrar') }}">Novo Produto</a>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Ações</th>
+        </tr>
+
+        {% for produto in produtos %}
+        <tr>
+            <td>{{ produto.id }}</td>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.categoria }}</td>
+            <td>R$ {{ "%.2f"|format(produto.preco) }}</td>
+            <td>{{ produto.estoque }}</td>
+            <td>
+                <a href="{{ url_for('editar', produto_id=produto.id) }}">
+                    Editar
+                </a>
+
+                <form action="{{ url_for('excluir', produto_id=produto.id) }}"
+                      method="POST"
+                      style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</body>
+</html>
